@@ -6,10 +6,6 @@ interface IEjsAttrs extends jdistsUtil.IAttrs {
    * 数据来源
    */
   data?: string
-  /**
-   * 是否重新编译，默认为需要
-   */
-  rework?: string
 }
 /**
  * ejs 模板渲染
@@ -17,15 +13,13 @@ interface IEjsAttrs extends jdistsUtil.IAttrs {
  * @param content 文本内容
  * @param attrs 属性
  * @param attrs.data 数据项，支持 JSON 和 YAML
- * @param attrs.rework 是否重新编译
  * @param scope 作用域
  * @param scope.execImport 导入数据
- * @param scope.compile 编译 jdists 文本
  * @return 返回渲染后的结果
  * @example processor():base
   ```js
   let attrs = {
-    data: '#name'
+    data: '#name',
   }
   let scope = {
     execImport: function (importion) {
@@ -34,18 +28,14 @@ interface IEjsAttrs extends jdistsUtil.IAttrs {
         age: 13
       `
     },
-    compile: function (content) {
-      return 'compile:' + content
-    },
   }
   console.log(processor('<b><%= name %> - <%= age %></b>', attrs, scope))
-  // > compile:<b>tom - 13</b>
+  // > <b>tom - 13</b>
   ```
  * @example processor():execImport is object & rework is No
   ```js
   let attrs = {
     data: '#name',
-    rework: 'No'
   }
   let scope = {
     execImport: function (importion) {
@@ -54,40 +44,21 @@ interface IEjsAttrs extends jdistsUtil.IAttrs {
         age: 13,
       }
     },
-    compile: function (content) {
-      return 'compile:' + content
-    },
   }
   console.log(processor('<b><%= name %> - <%= age %></b>', attrs, scope))
   // > <b>tom - 13</b>
   ```
  * @example processor():data is undefined
   ```js
-  let attrs = {
-  }
-  let scope = {
-    execImport: function (importion) {
-      return importion
-    },
-    compile: function (content) {
-      return 'compile:' + content
-    },
-  }
+  let attrs = {}
+  let scope = {}
   console.log(processor('<b><%= 1 + 2 %></b>', attrs, scope))
-  // > compile:<b>3</b>
+  // > <b>3</b>
   ```
  * @example processor():content is null
   ```js
-  let attrs = {
-  }
-  let scope = {
-    execImport: function (importion) {
-      return importion
-    },
-    compile: function (content) {
-      return content
-    },
-  }
+  let attrs = {}
+  let scope = {}
   console.log(processor(null, attrs, scope))
   // > null
   ```
@@ -104,9 +75,5 @@ export = (function (content: string, attrs: IEjsAttrs, scope: jdistsUtil.IScope)
       data = jsyaml.safeLoad(data)
     }
   }
-  if (jdistsUtil.isNo(attrs.rework)) {
-    return render(data)
-  } else {
-    return scope.compile(render(data))
-  }
+  return render(data)
 }) as jdistsUtil.IProcessor

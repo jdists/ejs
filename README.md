@@ -8,6 +8,34 @@ ejs as jdists processor
 
 * @see [ejs](https://github.com/mde/ejs)
 
+## Example
+
+```html
+<!--data>
+kids:
+  - name: Jimmy
+    age: '12'
+  - name: Sally
+    age: '4'
+</data-->
+
+<!--jdists encoding="ejs" data="?data"-->
+<ul>
+<% kids.forEach((item) => { %>
+  <li><%= item.name %> - <%= item.age %></li>
+<% }) %>
+</ul>
+<!--/jdists-->
+
+<!--ejs data="?data"-->
+<ul>
+<% kids.forEach((item) => { %>
+  <li><%= item.name %> - <%= item.age %></li>
+<% }) %>
+</ul>
+<!--/ejs-->
+```
+
 ## License
 
 MIT © [zswang](http://weibo.com/zswang)
