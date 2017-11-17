@@ -1,6 +1,6 @@
 {
   "name": "@jdists/ejs",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ejs as jdists processor",
   "main": "lib/index",
   "typings": "lib/index.d.ts",
@@ -33,6 +33,7 @@
   "homepage": "https://github.com/jdists/ejs#readme",
   "dependencies": {
     "ejs": "^2.5.7",
+    "jdists-util": "^0.0.7",
     "js-yaml": "^3.10.0"
   },
   "devDependencies": {
@@ -44,7 +45,6 @@
     "gulp-rename": "^1.2.2",
     "gulp-typescript": "^3.1.6",
     "istanbul": "^0.3.17",
-    "jdists-util": "^0.0.7",
     "merge2": "^1.1.0",
     "mocha": "^2.0.1",
     "should": "^4.1.0",
