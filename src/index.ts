@@ -56,7 +56,7 @@ export = (function (content: string, attrs: IEjsAttrs, scope: jdistsUtil.IScope)
   let render = ejs.compile(content, {})
   let data = null
   if (attrs.data) {
-    data = scope.execImport(attrs.data)
+    data = scope.execImport(attrs.data, true)
   }
 
   return render(data)
