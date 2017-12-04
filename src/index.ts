@@ -1,6 +1,5 @@
 import * as ejs from 'ejs'
 import * as jdistsUtil from 'jdists-util'
-import * as jsyaml from 'js-yaml'
 
 interface IEjsAttrs extends jdistsUtil.IAttrs {
   /**
@@ -24,23 +23,7 @@ interface IEjsAttrs extends jdistsUtil.IAttrs {
     data: '#name',
   }
   let scope = {
-    execImport: function (importion) {
-      return `
-        name: tom
-        age: 13
-      `
-    },
-  }
-  console.log(processor('<b><%= name %> - <%= age %></b>', attrs, scope))
-  // > <b>tom - 13</b>
-  ```
- * @example processor():execImport is object & rework is No
-  ```js
-  let attrs = {
-    data: '#name',
-  }
-  let scope = {
-    execImport: function (importion) {
+    execImport: function (importion, isYaml) {
       return {
         name: 'tom',
         age: 13,
@@ -74,9 +57,6 @@ export = (function (content: string, attrs: IEjsAttrs, scope: jdistsUtil.IScope)
   let data = null
   if (attrs.data) {
     data = scope.execImport(attrs.data)
-    if (typeof data === 'string') {
-      data = jsyaml.safeLoad(data)
-    }
   }
 
   return render(data)
